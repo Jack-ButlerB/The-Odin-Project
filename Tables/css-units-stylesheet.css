@@ -1,0 +1,120 @@
+/*
+  Josh's Custom CSS Reset
+  https://www.joshwcomeau.com/css/custom-css-reset/
+*/
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+p {
+  text-wrap: pretty;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+
+#root,
+#__next {
+  isolation: isolate;
+}
+/* end of CSS reset */
+
+body {
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "nav main"
+    "footer footer";
+  background-color: lightblue;
+}
+
+h1 {
+  grid-area: "header";
+  text-align: center;
+  /* font-size: 10vw; */
+  font-size: 50px;
+  font-style: italic;
+}
+nav {
+  grid-area: nav;
+}
+footer {
+  grid-area: footer;
+}
+article {
+  grid-area: main;
+}
+
+p {
+  font-size: calc(16px + 1vw);
+  /* line-height: calc(1.1em + 0.5vw); */
+  min-width: 500px;
+}
+
+@media (min-width: 1000px) {
+  p {
+    font-size: 30px;
+  }
+}
+@media (max-wdith: 500px) {
+  p {
+    font-size: 17px;
+  }
+}
+/* p::before {
+  content: "Pseudo-element number - ";
+} */
+.container {
+  border: 2px red dotted;
+  width: 200px;
+  height: px;
+}
+.box {
+  border: 10px solid black;
+  height: 100px;
+  background-image: linear-gradient(90deg, red, yellow);
+  /* rotate: 90deg; */
+}
