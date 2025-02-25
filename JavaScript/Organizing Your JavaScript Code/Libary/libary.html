@@ -8,7 +8,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title></title>
+  <title>test</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="library.css">
@@ -20,7 +20,7 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-  <h1 id="h1">Hello</h1>
+  <h1 id="pageViewHeader">Page view of the books</h1>
 
   <div>
     <table>
@@ -45,63 +45,20 @@
     <button id="nextButton">Next</button>
   </div>
 
+  <h1 id="tableOfBookdHeader">Table view of the books</h1>
+
+
   <button id="showBooksBtn">Show Books</button>
 
   <table id="tableOfBooks">
-    <tbody id="tableHeaderRow">
-      <tr>
-        <th>Title</th>
-        <th>Author</th>
-        <th>Number of Pages</th>
-        <th>Read?</th>
-        <th>Change read status</th>
-        <th>Remove</th>
-      </tr>
-    </tbody>
   </table>
 
   <button id="newBookBtn">Add New Book</button>
 
-  <dialog id="newBookForm">
-    <form id="newBookForm2">
-      <table id="newFormTable">
-        <tr>
-          <th>Title</th>
-          <td>
-            <input type="text" id="newBookTitle" value="">
-          </td>
-        </tr>
-        <tr>
-          <th>Author</th>
-          <td>
-            <input type="text" id="newBookAuthor" value="">
-          </td>
-        </tr>
-        <tr>
-          <th>Number of Pages</th>
-          <td>
-            <input type="text" name="" id="newBookNpages" value="">
-          </td>
-        </tr>
-        <tr>
-          <th>Read or not?</th>
-          <td>
-            <!-- <input type="text" name="" id="newBookHaveRead" value=""> -->
-            <input type="radio" id="readRadio" value="Read" name="read_status">
-            <label for="readRadio">Read</label>
-            <input type="radio" id="notReadYetRadio" value="Not read yet" name="read_status" checked>
-            <label for="notReadYetRadio">Not read yet</label>
-          </td>
-        </tr>
-      </table>
-      <input id="formSaveBtn" type="submit" value="Submit">
-    </form>
-  </dialog>
 
-  <div id="test"></div>
 
-  <div id="booksDiv"></div>
-  <script src="library.js" async defer></script>
+
+  <script type="module" src="library.js" async defer></script>
 </body>
 
 </html>

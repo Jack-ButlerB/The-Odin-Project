@@ -1,0 +1,279 @@
+Code I have deleted but might need
+
+function createBookRow() {
+  for (let n = 0; n < myLibrary.length; n++) {
+    const bookRow = document.createElement("tr");
+    bookRow.setAttribute("id", "Book" + n);
+    tableOfBooks.appendChild(bookRow);
+    const bookDataTitle = document.createElement("td");
+    bookDataTitle.textContent = myLibrary[n].title;
+    bookRow.appendChild(bookDataTitle);
+    const bookDataAuthor = document.createElement("td");
+    bookDataAuthor.textContent = myLibrary[n].author;
+    bookRow.appendChild(bookDataAuthor);
+    const bookDataNPages = document.createElement("td");
+    bookDataNPages.textContent = myLibrary[n].nPages;
+    bookRow.appendChild(bookDataNPages);
+    const bookDataHaveRead = document.createElement("td");
+    bookDataHaveRead.textContent = myLibrary[n].haveRead;
+    bookRow.appendChild(bookDataHaveRead);
+    const readStatusBtnBox = document.createElement("td");
+    const readStatusBtn = document.createElement("button");
+    readStatusBtn.addEventListener("click", function readStatus() {
+      if (myLibrary[n].haveRead == "Not read yet") {
+        myLibrary[n].haveRead = "Read";
+        bookDataHaveRead.textContent = myLibrary[n].haveRead;
+      } else if (myLibrary[n].haveRead == "Read") {
+        myLibrary[n].haveRead = "Not read yet";
+        bookDataHaveRead.textContent = myLibrary[n].haveRead;
+      } else {
+      }
+    });
+    readStatusBtn.textContent = "Change";
+    readStatusBtnBox.appendChild(readStatusBtn);
+    bookRow.appendChild(readStatusBtnBox);
+    const removeBtnBox = document.createElement("td");
+    bookRow.appendChild(removeBtnBox);
+    const removeBtn = document.createElement("button");
+    removeBtn.textContent = "X";
+    removeBtn.addEventListener("click", function () {
+      myLibrary.splice(n, 1);
+      console.log(myLibrary);
+      console.log(bookRow.getAttribute("id"));
+      // if (bookRow.getAttribute("id") == "Book" + n) {
+      document.getElementById("Book" + n).remove();
+      // }
+    });
+    removeBtnBox.appendChild(removeBtn);
+  }
+}
+
+
+
+
+
+Hard coded books without ID
+
+function Book(title, author, nPages, haveRead) {
+  this.title = title;
+  this.author = author;
+  this.nPages = nPages;
+  this.haveRead = haveRead;
+
+  Book.prototype.info = function () {
+    return title + " by " + author + ", " + nPages + " pages, " + haveRead;
+  };
+}
+
+function addBookToLibrary(book) {
+  myLibrary.push(book);
+}
+const myLibrary = [];
+
+// Hard coded books - GIVE BOOKS ID?!
+const theHobbit = new Book("The Hobbit", "J.R.R. Tolkien", 295, "Not read yet");
+const harryPotter = new Book(
+  "Harry Potter and the Goblet of Fire",
+  "J.K Rolling",
+  205,
+  "Read"
+);
+const lordOfTheRings = new Book(
+  "Lord of the Rings",
+  "J.R.R. Tolkien",
+  499,
+  "Not read yet"
+);
+const theBibble = new Book("The Bible", "Jesus", 1000, "Read");
+addBookToLibrary(theHobbit);
+addBookToLibrary(harryPotter);
+addBookToLibrary(lordOfTheRings);
+addBookToLibrary(theBibble);
+
+console.log(myLibrary);
+
+Why does it work without need to declare
+const bookDisplayTitle = document.getElementById("bookDisplayTitle");
+const book1Author = document.getElementById("book1Author");
+const book1Npages = document.getElementById("book1Npages");
+const book1HaveRead = document.getElementById("book1HaveRead");
+
+
+
+
+
+
+
+formSaveBtn.addEventListener("click", function preventSavedefault(event) {
+  event.preventDefault();
+  console.log("Default prevented");
+
+  function readRadioCheck() {
+    if (document.getElementById("readRadio").checked) {
+      return document.getElementById("readRadio").value;
+    } else if (document.getElementById("notReadYetRadio").checked) {
+      return document.getElementById("notReadYetRadio").value;
+    }
+  }
+
+  const newBook = new Book(
+    myLibrary.length,
+    document.getElementById("newBookTitle").value,
+    document.getElementById("newBookAuthor").value,
+    document.getElementById("newBookNpages").value,
+    readRadioCheck()
+  );
+  console.log(newBook);
+  myLibrary.push(newBook);
+  console.log(myLibrary);
+
+  // Form Reset
+  document.getElementById("newBookTitle").value =
+    document.getElementById("newBookAuthor").value =
+    document.getElementById("newBookNpages").value =
+      null;
+  document.getElementById("notReadYetRadio").checked = true;
+
+  // newBookForm.style.display = "none";
+  newBookBtn.style.display = "inline";
+  tableOfBooks.replaceChildren();
+  renderBooks(myLibrary);
+});
+
+
+
+For when I use the a js library to make this
+
+  <dialog id="newBookForm3">
+    <form autofocus id="newBookForm4">
+      <table id="newFormTable">
+        <tr>
+          <th>Title</th>
+          <td>
+            <input type="text" id="newBookTitle" value="">
+          </td>
+        </tr>
+        <tr>
+          <th>Author</th>
+          <td>
+            <input type="text" id="newBookAuthor" value="">
+          </td>
+        </tr>
+        <tr>
+          <th>Number of Pages</th>
+          <td>
+            <input type="text" name="" id="newBookNpages" value="">
+          </td>
+        </tr>
+        <tr>
+          <th>Read or not?</th>
+          <td>
+            <input type="radio" id="readRadio" value="Read" name="read_status">
+            <label for="readRadio">Read</label>
+            <input type="radio" id="notReadYetRadio" value="Not read yet" name="read_status" checked>
+            <label for="notReadYetRadio">Not read yet</label>
+          </td>
+        </tr>
+      </table>
+      <input id="formSaveBtn" type="submit" value="Submit">
+    </form>
+  </dialog>
+
+
+  <table id="tableOfBooks">
+    <tbody id="tableHeaderRow">
+      <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Number of Pages</th>
+        <th>Read?</th>
+        <th>Change read status</th>
+        <th>Remove</th>
+      </tr>
+    </tbody>
+  </table>
+
+
+export function newBookFormDialog() {
+  newBookForm.style.display = "block";
+  newBookForm.showModal();
+  newBookBtn.style.display = "none";
+  console.log("clicked new book button");
+  const formSaveBtn = document.getElementById("formSaveBtn");
+  console.log(formSaveBtn);
+}
+
+
+function preventSavedefault(event) {
+  event.preventDefault();
+  console.log("Default prevented");
+}
+
+function readStatus(haveRead, targetedTd) {
+  if (myLibrary[n].haveRead == "Not read yet") {
+    myLibrary[n].haveRead = "Read";
+    bookDataHaveRead.textContent = myLibrary[n].haveRead;
+  } else if (myLibrary[n].haveRead == "Read") {
+    myLibrary[n].haveRead = "Not read yet";
+    bookDataHaveRead.textContent = myLibrary[n].haveRead;
+  } else {
+  }
+}
+
+
+  // for (let n = 0; n < library.length; n++) {
+  //   const bookRow = document.createElement("tr");
+  //   tableBody.appendChild(bookRow);
+
+  //   const bookDataTitle = document.createElement("td");
+  //   bookDataTitle.textContent = library[n].title;
+  //   bookRow.appendChild(bookDataTitle);
+  //   const bookDataAuthor = document.createElement("td");
+  //   bookDataAuthor.textContent = library[n].author;
+  //   bookRow.appendChild(bookDataAuthor);
+  //   const bookDataNPages = document.createElement("td");
+  //   bookDataNPages.textContent = library[n].nPages;
+  //   bookRow.appendChild(bookDataNPages);
+  //   const bookDataHaveRead = document.createElement("td");
+  //   bookDataHaveRead.textContent = library[n].haveRead;
+  //   bookRow.appendChild(bookDataHaveRead);
+  //   const readStatusBtnBox = document.createElement("td");
+  //   const readStatusBtn = document.createElement("button");
+  //   readStatusBtn.addEventListener("click", function readStatus() {
+  //     if (library[n].haveRead == "Not read yet") {
+  //       library[n].haveRead = "Read";
+  //       tableOfBooks.replaceChildren();
+  //       renderBooks(library);
+  //     } else if (library[n].haveRead == "Read") {
+  //       library[n].haveRead = "Not read yet";
+  //       tableOfBooks.replaceChildren();
+  //       renderBooks(library);
+  //     } else {
+  //     }
+  //   });
+  //   readStatusBtn.textContent = "Change";
+  //   readStatusBtnBox.appendChild(readStatusBtn);
+  //   bookRow.appendChild(readStatusBtnBox);
+
+  //   // Edit btn
+  //   const editBtnBox = document.createElement("td");
+  //   const editBtn = document.createElement("button");
+  //   editBtn.textContent = "Edit Book";
+  //   editBtn.addEventListener("click", function () {
+  //     renderNewBookForm(library[n], library);
+  //   });
+  //   editBtnBox.appendChild(editBtn);
+  //   bookRow.appendChild(editBtnBox);
+
+  //   // Remove btn
+  //   const removeBtnBox = document.createElement("td");
+  //   bookRow.appendChild(removeBtnBox);
+  //   const removeBtn = document.createElement("button");
+  //   removeBtn.textContent = "X";
+  //   removeBtn.addEventListener("click", function () {
+  //     library.splice(n, 1);
+  //     tableOfBooks.replaceChildren();
+  //     renderBooks(library);
+  //   });
+  //   removeBtnBox.appendChild(removeBtn);
+  // }

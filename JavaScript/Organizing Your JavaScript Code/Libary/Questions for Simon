@@ -1,1 +1,113 @@
 Questions for Simon
+
+Further development of this project
+Form Validation - 
+
+
+Refected code:
+  const newBookFormTableRow1 = document.createElement("tr");
+  newBookFormTable.appendChild(newBookFormTableRow1);
+
+  const newBookFormTableRow1Header = document.createElement("th");
+  newBookFormTableRow1Header.textContent = "Title";
+  newBookFormTableRow1.appendChild(newBookFormTableRow1Header);
+
+  const newBookFormTableRow1Data = document.createElement("td");
+  newBookFormTableRow1.appendChild(newBookFormTableRow1Data);
+  const newBookFormTableRow1DataInput = document.createElement("input");
+  newBookFormTableRow1DataInput.setAttribute("type", "text");
+  newBookFormTableRow1DataInput.setAttribute("id", "newBookTitle");
+  newBookFormTableRow1DataInput.setAttribute("value", bookToEdit?.title || "");
+  newBookFormTableRow1Data.appendChild(newBookFormTableRow1DataInput);
+
+
+  const newBookFormTableRow2 = document.createElement("tr");
+  newBookFormTable.appendChild(newBookFormTableRow2);
+
+
+  const newBookFormTableRow2Header = document.createElement("th");
+  newBookFormTableRow2Header.textContent = "Author";
+  newBookFormTableRow2.appendChild(newBookFormTableRow2Header);
+
+
+  const newBookFormTableRow2Data = document.createElement("td");
+  newBookFormTableRow2.appendChild(newBookFormTableRow2Data);
+  const newBookFormTableRow2DataInput = document.createElement("input");
+  newBookFormTableRow2DataInput.setAttribute("type", "text");
+  newBookFormTableRow2DataInput.setAttribute("id", "newBookAuthor");
+  newBookFormTableRow2DataInput.setAttribute("value", bookToEdit?.author || "");
+  newBookFormTableRow2Data.appendChild(newBookFormTableRow2DataInput);
+
+
+  const newBookFormTableRow3 = document.createElement("tr");
+  newBookFormTable.appendChild(newBookFormTableRow3);
+
+
+  const newBookFormTableRow3Header = document.createElement("th");
+  newBookFormTableRow3Header.textContent = "Number of Pages";
+  newBookFormTableRow3.appendChild(newBookFormTableRow3Header);
+
+
+  const newBookFormTableRow3Data = document.createElement("td");
+  newBookFormTableRow3.appendChild(newBookFormTableRow3Data);
+  const newBookFormTableRow3DataInput = document.createElement("input");
+  newBookFormTableRow3DataInput.setAttribute("type", "text");
+  newBookFormTableRow3DataInput.setAttribute("id", "newBookNpages");
+  newBookFormTableRow3DataInput.setAttribute("value", bookToEdit?.nPages || "");
+  newBookFormTableRow3.appendChild(newBookFormTableRow3Data);
+  newBookFormTableRow3Data.appendChild(newBookFormTableRow3DataInput);
+
+  const newBookFormTableRow4 = document.createElement("tr");
+  newBookFormTable.appendChild(newBookFormTableRow4);
+
+  const newBookFormTableRow4Header = document.createElement("th");
+  newBookFormTableRow4Header.textContent = "Read or not?";
+  newBookFormTableRow4.appendChild(newBookFormTableRow4Header);
+
+
+
+
+// Refectored again
+
+function creatNewRow(number) {
+  const newBookFormTableRow = document.createElement("tr");
+  newBookFormTableRow.setAttribute("id", "newBookFormTableRow" + number);
+  document.getElementById("newFormTable").appendChild(newBookFormTableRow);
+}
+
+function creatNewRowHeader(header, number) {
+  const newBookFormTableRowHeader = document.createElement("th");
+  newBookFormTableRowHeader.textContent = header;
+  const row = document.getElementById("newBookFormTableRow" + number);
+  row.appendChild(newBookFormTableRowHeader);
+}
+
+function createNewRowInput(property, bookProperty, number, bookToEdit) {
+  const newBookFormTableRowData = document.createElement("td");
+  const row = document.getElementById("newBookFormTableRow" + number);
+  row.appendChild(newBookFormTableRowData);
+  const newBookFormTableRowDataInput = document.createElement("input");
+  newBookFormTableRowDataInput.setAttribute("type", "text");
+  newBookFormTableRowDataInput.setAttribute("id", "newBook" + property);
+  newBookFormTableRowDataInput.setAttribute(
+    "value",
+    bookToEdit?.[bookProperty] || ""
+  );
+  newBookFormTableRowData.appendChild(newBookFormTableRowDataInput);
+}
+
+
+  creatNewRow(1);
+  creatNewRowHeader("Title", 1);
+  createNewRowInput("Title", "title", 1, bookToEdit);
+
+  creatNewRow(2);
+  creatNewRowHeader("Author", 2);
+  createNewRowInput("Author", "author", 2, bookToEdit);
+
+  creatNewRow(3);
+  creatNewRowHeader("Number of Pages", 3);
+  createNewRowInput("Npages", "nPages", 3, bookToEdit);
+
+  creatNewRow(4);
+  creatNewRowHeader("Number of Pages", 4);
