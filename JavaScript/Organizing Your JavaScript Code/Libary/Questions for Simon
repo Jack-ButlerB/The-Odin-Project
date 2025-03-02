@@ -111,3 +111,57 @@ function createNewRowInput(property, bookProperty, number, bookToEdit) {
 
   creatNewRow(4);
   creatNewRowHeader("Number of Pages", 4);
+
+
+refactored again
+// function creatNewRow(number) {
+//   const newBookFormTableRow = document.createElement("tr");
+//   newBookFormTableRow.setAttribute("id", "newBookFormTableRow" + number);
+//   const newBookFormTable = document.getElementById("newFormTable");
+
+//   newBookFormTable.appendChild(newBookFormTableRow);
+// }
+
+// function creatNewRowHeader(header, idLabel) {
+//   const newBookFormTableRowHeader = document.createElement("th");
+//   newBookFormTableRowHeader.textContent = header;
+//   const row = document.getElementById("newBookFormTableRow" + idLabel);
+//   row.appendChild(newBookFormTableRowHeader);
+// }
+
+// function createNewRowInput(property, bookProperty, number, bookToEdit) {
+//   const newBookFormTableRowData = document.createElement("td");
+//   const row = document.getElementById("newBookFormTableRow" + number);
+//   row.appendChild(newBookFormTableRowData);
+//   const newBookFormTableRowDataInput = document.createElement("input");
+//   newBookFormTableRowDataInput.setAttribute("type", "text");
+//   newBookFormTableRowDataInput.setAttribute("id", "newBook" + property);
+//   newBookFormTableRowDataInput.setAttribute(
+//     "value",
+//     bookToEdit?.[bookProperty] || ""
+//   );
+//   newBookFormTableRowData.appendChild(newBookFormTableRowDataInput);
+// }
+
+  //   // REFACTORED
+  //   [1, 2, 3, 4].forEach((item) => {
+  //     creatNewRow(item);
+  //   });
+  // }
+
+
+
+  // const rowHeaderArray = ["Title", "Author", "Number of Pages", "Read?"];
+  // for (let n = 0; n < rowHeaderArray.length; n++) {
+  //   const i = n + 1;
+  //   creatNewRowHeader(rowHeaderArray[n], i);
+  // }
+  // lowerCase doesn't work sadly!
+  // const propertyArray = ["Title", "Author", "Npages"];
+  // const BookpropertyArray = ["title", "author", "nPages"];
+  // propertyArray.forEach((element, index) => {
+  //   const number = index + 1;
+  //   const BookProperty = BookpropertyArray[index];
+  //   console.log(element, BookProperty, number, bookToEdit);
+  //   createNewRowInput(element, BookProperty, number, bookToEdit);
+  // });

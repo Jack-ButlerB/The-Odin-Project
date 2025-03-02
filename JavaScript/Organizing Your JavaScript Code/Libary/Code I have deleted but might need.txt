@@ -277,3 +277,55 @@ function readStatus(haveRead, targetedTd) {
   //   });
   //   removeBtnBox.appendChild(removeBtn);
   // }
+
+
+// function createFormRow(header, bookProperty, bookToEdit) {
+//   const newBookFormTableRow1 = document.createElement("tr");
+//   const newBookFormTable = document.getElementById("newFormTable");
+
+//   newBookFormTable.appendChild(newBookFormTableRow1);
+
+//   const newBookFormTableRow1Header = document.createElement("th");
+//   newBookFormTableRow1Header.textContent = header;
+//   newBookFormTableRow1.appendChild(newBookFormTableRow1Header);
+
+//   const newBookFormTableRow1Data = document.createElement("td");
+//   newBookFormTableRow1.appendChild(newBookFormTableRow1Data);
+//   const newBookFormTableRow1DataInput = document.createElement("input");
+//   newBookFormTableRow1DataInput.setAttribute("type", "text");
+//   newBookFormTableRow1DataInput.setAttribute("id", "newBookTitle");
+//   newBookFormTableRow1DataInput.setAttribute(
+//     "value",
+//     bookToEdit?.(bookProperty) || ""
+//   );
+//   newBookFormTableRow1Data.appendChild(newBookFormTableRow1DataInput);
+// }
+
+
+
+function creatNewRow(number) {
+  const newBookFormTableRow = document.createElement("tr");
+  newBookFormTableRow.setAttribute("id", "newBookFormTableRow" + number);
+  document.getElementById("newFormTable").appendChild(newBookFormTableRow);
+}
+
+function creatNewRowHeader(header, idLabel) {
+  const newBookFormTableRowHeader = document.createElement("th");
+  newBookFormTableRowHeader.textContent = header;
+  const row = document.getElementById("newBookFormTableRow" + idLabel);
+  row.appendChild(newBookFormTableRowHeader);
+}
+
+function createNewRowInput(property, bookProperty, number, bookToEdit) {
+  const newBookFormTableRowData = document.createElement("td");
+  const row = document.getElementById("newBookFormTableRow" + number);
+  row.appendChild(newBookFormTableRowData);
+  const newBookFormTableRowDataInput = document.createElement("input");
+  newBookFormTableRowDataInput.setAttribute("type", "text");
+  newBookFormTableRowDataInput.setAttribute("id", "newBook" + property);
+  newBookFormTableRowDataInput.setAttribute(
+    "value",
+    bookToEdit?.[bookProperty] || ""
+  );
+  newBookFormTableRowData.appendChild(newBookFormTableRowDataInput);
+}

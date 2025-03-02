@@ -16,52 +16,38 @@ export function addBookToLibrary(book, library) {
 
 const body = document.querySelector("body");
 
-// function createFormRow(header, bookProperty, bookToEdit) {
-//   const newBookFormTableRow1 = document.createElement("tr");
-//   const newBookFormTable = document.getElementById("newFormTable");
-
-//   newBookFormTable.appendChild(newBookFormTableRow1);
-
-//   const newBookFormTableRow1Header = document.createElement("th");
-//   newBookFormTableRow1Header.textContent = header;
-//   newBookFormTableRow1.appendChild(newBookFormTableRow1Header);
-
-//   const newBookFormTableRow1Data = document.createElement("td");
-//   newBookFormTableRow1.appendChild(newBookFormTableRow1Data);
-//   const newBookFormTableRow1DataInput = document.createElement("input");
-//   newBookFormTableRow1DataInput.setAttribute("type", "text");
-//   newBookFormTableRow1DataInput.setAttribute("id", "newBookTitle");
-//   newBookFormTableRow1DataInput.setAttribute(
-//     "value",
-//     bookToEdit?.(bookProperty) || ""
-//   );
-//   newBookFormTableRow1Data.appendChild(newBookFormTableRow1DataInput);
-// }
-
-function creatNewRow(number) {
+function createRowRowHeaderInput(formField, header, bookToEdit) {
   const newBookFormTableRow = document.createElement("tr");
-  newBookFormTableRow.setAttribute("id", "newBookFormTableRow" + number);
-  document.getElementById("newFormTable").appendChild(newBookFormTableRow);
-}
 
-function creatNewRowHeader(header, number) {
+  const newBookFormTable = document.getElementById("newFormTable");
+
+  newBookFormTable.appendChild(newBookFormTableRow);
+
   const newBookFormTableRowHeader = document.createElement("th");
   newBookFormTableRowHeader.textContent = header;
-  const row = document.getElementById("newBookFormTableRow" + number);
-  row.appendChild(newBookFormTableRowHeader);
-}
+  newBookFormTableRow.appendChild(newBookFormTableRowHeader);
+  // console.log("book being passed", bookToEdit);
+  // console.log(bookToEdit.title);
+  // console.log("formField", formField);
 
-function createNewRowInput(property, bookProperty, number, bookToEdit) {
   const newBookFormTableRowData = document.createElement("td");
-  const row = document.getElementById("newBookFormTableRow" + number);
-  row.appendChild(newBookFormTableRowData);
+  newBookFormTableRow.appendChild(newBookFormTableRowData);
   const newBookFormTableRowDataInput = document.createElement("input");
   newBookFormTableRowDataInput.setAttribute("type", "text");
-  newBookFormTableRowDataInput.setAttribute("id", "newBook" + property);
-  newBookFormTableRowDataInput.setAttribute(
-    "value",
-    bookToEdit?.[bookProperty] || ""
-  );
+  newBookFormTableRowDataInput.setAttribute("id", "newBook" + formField);
+  if (formField == "title") {
+    newBookFormTableRowDataInput.setAttribute("value", bookToEdit?.title || "");
+  } else if (formField == "author") {
+    newBookFormTableRowDataInput.setAttribute(
+      "value",
+      bookToEdit?.author || ""
+    );
+  } else if (formField == "nPages") {
+    newBookFormTableRowDataInput.setAttribute(
+      "value",
+      bookToEdit?.nPages || ""
+    );
+  }
   newBookFormTableRowData.appendChild(newBookFormTableRowDataInput);
 }
 
@@ -79,29 +65,27 @@ export function renderNewBookForm(bookToEdit, library) {
   newBookFormTable.setAttribute("id", "newFormTable");
   newBookFormForm.appendChild(newBookFormTable);
 
-  // REFACTORED
-  [1, 2, 3, 4].forEach((item) => {
-    creatNewRow(item);
-  });
+  const formFields = {
+    title: "Title",
+    author: "Author",
+    nPages: "Number of Pages",
+  };
 
-  const rowHeaderArray = ["Title", "Author", "Number of Pages", "Read?"];
-  for (let n = 0; n < rowHeaderArray.length; n++) {
-    const i = n + 1;
-    creatNewRowHeader(rowHeaderArray[n], i);
+  for (const [key, value] of Object.entries(formFields)) {
+    // console.log("key", key, "value", value, "BookToEdit", bookToEdit);
+    createRowRowHeaderInput(key, value, bookToEdit);
   }
-  // lowerCase doesn't work sadly!
-  const propertyArray = ["Title", "Author", "Npages"];
-  const BookpropertyArray = ["title", "author", "nPages"];
-  propertyArray.forEach((element, index) => {
-    const number = index + 1;
-    const BookProperty = BookpropertyArray[index];
-    console.log(element, BookProperty, number, bookToEdit);
-    createNewRowInput(element, BookProperty, number, bookToEdit);
-  });
 
-  const newBookFormTableRow4 = document.getElementById(
-    "newBookFormTableRow" + 4
-  );
+  const newBookFormTableRow4 = document.createElement("tr");
+  newBookFormTable.appendChild(newBookFormTableRow4);
+
+  const newBookFormTableRow4Header = document.createElement("th");
+  newBookFormTableRow4Header.textContent = "Read or not?";
+  newBookFormTableRow4.appendChild(newBookFormTableRow4Header);
+
+  // const newBookFormTableRow4 = document.getElementById(
+  //   "newBookFormTableRow" + 4
+  // );
   const newBookFormTableRow4Data = document.createElement("td");
   newBookFormTableRow4.appendChild(newBookFormTableRow4Data);
   const newBookFormTableRow4DataInput = document.createElement("input");
@@ -143,18 +127,12 @@ export function renderNewBookForm(bookToEdit, library) {
   newBookFormForm.appendChild(newBookFormSaveBtn);
   newBookFormSaveBtn.addEventListener("click", function (event) {
     event.preventDefault();
-    // either editing passed book or push a new one to the 'library' array
 
+    // either editing passed book or push a new one to the 'library' array
     if (bookToEdit) {
-      // const bookProperties = ["title", "author", "nPages"];
-      // for (const element of bookProperties) {
-      //   const input = "newBook" + element;
-      //   library[bookToEdit.id].element = document.getElementById(input).value;
-      // }
-      // console.log(library[bookToEdit.id].title);
-      bookToEdit.title = document.getElementById("newBookTitle").value;
-      bookToEdit.author = document.getElementById("newBookAuthor").value;
-      bookToEdit.nPages = document.getElementById("newBookNpages").value;
+      bookToEdit.title = document.getElementById("newBooktitle").value;
+      bookToEdit.author = document.getElementById("newBookauthor").value;
+      bookToEdit.nPages = document.getElementById("newBooknPages").value;
       bookToEdit.haveRead = newBookFormTableRow4DataInput.checked
         ? "Read"
         : "Not read yet";
@@ -169,9 +147,9 @@ export function renderNewBookForm(bookToEdit, library) {
       const newBookID = highestID + 1;
       const newBook = new Book(
         newBookID,
-        document.getElementById("newBookTitle").value,
-        document.getElementById("newBookAuthor").value,
-        document.getElementById("newBookNpages").value,
+        document.getElementById("newBooktitle").value,
+        document.getElementById("newBookauthor").value,
+        document.getElementById("newBooknPages").value,
         newBookFormTableRow4DataInput.checked ? "Read" : "Not read yet"
       );
       library.push(newBook);
@@ -189,6 +167,7 @@ export function renderNewBookForm(bookToEdit, library) {
     }
   });
 }
+
 function createTableHeader(text) {
   const bookTableHeader = document.createElement("th");
   bookTableHeader.textContent = text;
@@ -228,9 +207,9 @@ export function renderBooks(library) {
     const bookDataAuthor = document.createElement("td");
     bookDataAuthor.textContent = book.author;
     bookRow.appendChild(bookDataAuthor);
-    const bookDataNPages = document.createElement("td");
-    bookDataNPages.textContent = book.nPages;
-    bookRow.appendChild(bookDataNPages);
+    const bookDatanPages = document.createElement("td");
+    bookDatanPages.textContent = book.nPages;
+    bookRow.appendChild(bookDatanPages);
     const bookDataHaveRead = document.createElement("td");
     bookDataHaveRead.textContent = book.haveRead;
     bookRow.appendChild(bookDataHaveRead);
