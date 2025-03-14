@@ -174,9 +174,10 @@ function checkBoardForWinners(player) {
   //     }, 6000);  }
 }
 
-function playerTakesTurn(gameboard, player, row, column) {
-  if (!gameboard[row][column]) {
-    gameboard[row][column] = player.marker;
+function playerTakesTurn(gameboard, player, rowIndex, columnIndex) {
+  // If cell is empty
+  if (!gameboard[rowIndex][columnIndex]) {
+    gameboard[rowIndex][columnIndex] = player.marker;
     turnsTaken++;
     console.log(player);
     console.log("turnsTaken" + turnsTaken);
@@ -185,36 +186,39 @@ function playerTakesTurn(gameboard, player, row, column) {
         " took their turn placing an '" +
         player.marker +
         "' in Row " +
-        row +
+        rowIndex +
         ", Column " +
-        column
+        columnIndex
     );
-    if (turnsTaken == 0 || turnsTaken % 2 == 0) {
-      player = player1;
-    } else {
-      player = player2;
-    }
 
-    wipeAndRerenderBoard(gameboard, player, row, column);
+    player = player === player1 ? player2 : player1;
+
+    // if (turnsTaken === 0 || turnsTaken % 2 === 0) {
+    //   player = player1;
+    // } else {
+    //   player = player2;
+    // }
+
+    wipeAndRerenderBoard(gameboard, player, rowIndex, columnIndex);
     checkBoardForWinners(player);
   } else {
     console.log("This position is already taken, please try again");
   }
 }
 
-function createGameboardRow(gameboardDiv, gameboard, rowNumber, player) {
+function createGameboardRow(gameboardDiv, gameboard, rowIndex, player) {
   // object,assign
   // return document.createElement("div").setAttribute("id", "gameboardRow");
   const rowBox = document.createElement("div");
-  rowBox.setAttribute("id", "gameboardRow" + rowNumber);
+  rowBox.setAttribute("id", "gameboardRow" + rowIndex);
   rowBox.style.display = "flex";
   rowBox.style.flexdirection = "row";
   gameboardDiv.appendChild(rowBox);
 
-  for (let n = 0; n <= 2; n++) {
+  for (let columnIndex = 0; columnIndex <= 2; columnIndex++) {
     const columnBox = document.createElement("div");
-    columnBox.setAttribute("id", `gameboard [${rowNumber}] [${n}]`);
-    columnBox.textContent = gameboard[rowNumber][n];
+    columnBox.setAttribute("id", `gameboard [${rowIndex}] [${columnIndex}]`);
+    columnBox.textContent = gameboard[rowIndex][columnIndex];
     columnBox.style.fontSize = "100px";
     columnBox.style.width = "100px";
     columnBox.style.height = "100px";
@@ -224,8 +228,8 @@ function createGameboardRow(gameboardDiv, gameboard, rowNumber, player) {
     columnBox.style.justifyContent = "center";
     columnBox.style.alignItems = "center";
     columnBox.addEventListener("click", () => {
-      playerTakesTurn(gameboard, player, rowNumber, n);
-      console.log(1 + `gameboard [${rowNumber}] [${n}]`);
+      playerTakesTurn(gameboard, player, rowIndex, columnIndex);
+      console.log(1 + `gameboard [${rowIndex}] [${columnIndex}]`);
     });
 
     rowBox.appendChild(columnBox);
@@ -240,10 +244,11 @@ function renderBoard(gameboard, player) {
   gameboardDiv.style.border = "red 2px solid";
   gameboardDiv.style.width = "fit-content";
   body.appendChild(gameboardDiv);
-  for (let j = 0; j <= 2; j++) {
-    createGameboardRow(gameboardDiv, gameboard, j, player);
+  for (let rowIndex = 0; rowIndex <= 2; rowIndex++) {
+    createGameboardRow(gameboardDiv, gameboard, rowIndex, player);
   }
 }
+
 const formSubmit = document.getElementById("formSubmit");
 
 formSubmit.addEventListener("click", (event) => {
