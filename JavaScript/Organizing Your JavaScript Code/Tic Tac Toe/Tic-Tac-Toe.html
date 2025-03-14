@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
 <html>
 
 <head>
@@ -16,18 +12,27 @@
 
 <body>
   <h1>Tic Tac Toe</h1>
-  <style>
-    /* body {
-      background: linear-gradient(to bottom, white, white 16.6%, red 16.6%, red 17.6%, white 17.6%, white);
-    } */
-  </style>
+  <form id="playersInfo">
+    <div class="player1Info" style="display: flex;">
+      <p>Player 1 Name = </p>
+      <input type="text" placeholder="Player 1" id="player1Name">
+      <p>Marker = </p>
+      <input type="text" placeholder="X" id="player1Marker">
 
-  <!--[if lt IE 7]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
-  <!-- <h1>playerTakesTurn(player1, 0, 0),playerTakesTurn(player1, 0, 1),playerTakesTurn(player1, 0, 2)</h1>
-  <h1>playerTakesTurn(player1, 1, 0),playerTakesTurn(player1, 1, 1),playerTakesTurn(player1, 1, 2)</h1> -->
-  <script type="module" src="Tic-Tac-Toe.js" async defer></script>
+    </div>
+    <div class="player2Info" style="display: flex">
+      <p>Player 2 Name = </p>
+      <input type="text" placeholder="Player 2" id="player2Name">
+      <p>Marker = </p>
+      <input type="text" placeholder="O" id="player2Marker">
+      <input type="submit" id="formSubmit">
+
+    </div>
+  </form>
+
+  <script src="Tic-Tac-Toe.js" async defer></script>
 </body>
 
 </html>
+
+<!-- type="module"

@@ -19,3 +19,6 @@ body {
   flex-direction: row;
   ju
 } */
+p {
+  margin: 0;
+}

@@ -1,6 +1,6 @@
 // import { renderBoard } from "./render.js";
-const player1 = { name: "Player 1", marker: "X" };
-const player2 = { name: "Player 2", marker: "O" };
+let player1 = { name: "Player 1", marker: "X" };
+let player2 = { name: "Player 2", marker: "O" };
 
 // make empty entries either null or empty string. Better to be falsey
 // let gameboard = [
@@ -8,21 +8,26 @@ const player2 = { name: "Player 2", marker: "O" };
 //   [null, null, null],
 //   [null, null, null],
 // ];
+
 let gameboard = [
   ["", "", ""],
   ["", "", ""],
   ["", "", ""],
 ];
 
+let player = player1;
+let turnsTaken = 0;
+
 console.log("gameboard initial state", gameboard);
 
-function wipeAndRerenderBoard(gameboard, player, row, column) {
+function wipeAndRerenderBoard(gameboard, player) {
   const gameboardDiv = document.getElementById("gameboardDiv");
   gameboardDiv.remove();
-  renderBoard(gameboard, player, row, column);
+  renderBoard(gameboard, player);
 }
 
 function checkBoardForWinners(player) {
+  console.log("Player", player);
   const firstRow = {
     title: "First Row",
     line: [gameboard[0][0], gameboard[0][1], gameboard[0][2]],
@@ -90,7 +95,14 @@ function checkBoardForWinners(player) {
       if (winningline.drawLine) {
         gameboardDiv.style.background = winningline.drawLine;
       }
-      console.log(player.name + " wins" + " on " + winningline.title);
+      winnerDialog = document.createElement("dialog");
+      const body = document.querySelector("body");
+      body.appendChild(winnerDialog);
+      winnerDialog.textContent = `${player1.name} Wins!`;
+      winnerDialog.showModal();
+      const clapping = new Audio("small-crowd-clapping-2-106993.mp3");
+      clapping.play();
+      console.log(player1.name + " wins" + " on " + winningline.title);
       console.log("Resetting board...");
       gameboard = [
         ["", "", ""],
@@ -101,14 +113,73 @@ function checkBoardForWinners(player) {
         console.log("Board reset");
         console.log(gameboard);
         wipeAndRerenderBoard(gameboard, player);
-      }, 3000);
+        winnerDialog.remove();
+      }, 9000);
     }
+    // } else if (winningline.line.every((item) => item === player2.marker)) {
+    //   const gameboardDiv = document.getElementById("gameboardDiv");
+
+    //   if (winningline.drawLine) {
+    //     gameboardDiv.style.background = winningline.drawLine;
+    //   }
+    //   winnerDialog = document.createElement("dialog");
+    //   const body = document.querySelector("body");
+    //   body.appendChild(winnerDialog);
+    //   winnerDialog.textContent = `${player2.name} Wins!`;
+    //   winnerDialog.showModal();
+    //   const clapping = new Audio("small-crowd-clapping-2-106993.mp3");
+    //   clapping.play();
+
+    //   console.log(player2.name + " wins" + " on " + winningline.title);
+    //   console.log("Resetting board...");
+    //   gameboard = [
+    //     ["", "", ""],
+    //     ["", "", ""],
+    //     ["", "", ""],
+    //   ];
+    //   setTimeout(() => {
+    //     console.log("Board reset");
+    //     console.log(gameboard);
+    //     wipeAndRerenderBoard(gameboard, player);
+    //     winnerDialog.remove();
+    //   }, 9000);
+    // }
   }
+  //   if (
+  //     !firstRow.line.every((item) => item) &&
+  //     !secondRow.line.every((item) => item) &&
+  //     !thirdRow.line.every((item) => item)
+  //   ) {
+  //     console.log("No one won");
+  //     winnerDialog = document.createElement("dialog");
+  //     const body = document.querySelector("body");
+  //     body.appendChild(winnerDialog);
+  //     winnerDialog.textContent = "No one won!?";
+  //     winnerDialog.showModal();
+  //     const clapping = new Audio("small-crowd-reactions-6977.mp3");
+  //     clapping.play();
+
+  //     console.log("Resetting board...");
+  //     gameboard = [
+  //       ["", "", ""],
+  //       ["", "", ""],
+  //       ["", "", ""],
+  //     ];
+  //     setTimeout(() => {
+  //       console.log("Board reset");
+  //       console.log(gameboard);
+  //       wipeAndRerenderBoard(gameboard, player);
+  //       winnerDialog.remove();
+  //       clapping.pause();
+  //     }, 6000);  }
 }
 
-function playerTakesTurn(gameboardChosen, player, row, column) {
-  if (!gameboardChosen[row][column]) {
-    gameboardChosen[row][column] = player.marker;
+function playerTakesTurn(gameboard, player, row, column) {
+  if (!gameboard[row][column]) {
+    gameboard[row][column] = player.marker;
+    turnsTaken++;
+    console.log(player);
+    console.log("turnsTaken" + turnsTaken);
     console.log(
       player.name +
         " took their turn placing an '" +
@@ -118,20 +189,20 @@ function playerTakesTurn(gameboardChosen, player, row, column) {
         ", Column " +
         column
     );
-    wipeAndRerenderBoard(gameboardChosen, player, row, column);
-    console.log("gameboard after turn", gameboardChosen);
+    if (turnsTaken == 0 || turnsTaken % 2 == 0) {
+      player = player1;
+    } else {
+      player = player2;
+    }
+
+    wipeAndRerenderBoard(gameboard, player, row, column);
     checkBoardForWinners(player);
   } else {
     console.log("This position is already taken, please try again");
   }
 }
 
-export function createGameboardRow(
-  gameboardDiv,
-  gameboardChosen,
-  rowNumber,
-  player
-) {
+function createGameboardRow(gameboardDiv, gameboard, rowNumber, player) {
   // object,assign
   // return document.createElement("div").setAttribute("id", "gameboardRow");
   const rowBox = document.createElement("div");
@@ -143,7 +214,7 @@ export function createGameboardRow(
   for (let n = 0; n <= 2; n++) {
     const columnBox = document.createElement("div");
     columnBox.setAttribute("id", `gameboard [${rowNumber}] [${n}]`);
-    columnBox.textContent = gameboardChosen[rowNumber][n];
+    columnBox.textContent = gameboard[rowNumber][n];
     columnBox.style.fontSize = "100px";
     columnBox.style.width = "100px";
     columnBox.style.height = "100px";
@@ -153,14 +224,14 @@ export function createGameboardRow(
     columnBox.style.justifyContent = "center";
     columnBox.style.alignItems = "center";
     columnBox.addEventListener("click", () => {
-      playerTakesTurn(gameboardChosen, player, rowNumber, n);
-      console.log(`gameboard [${rowNumber}] [${n}]`);
+      playerTakesTurn(gameboard, player, rowNumber, n);
+      console.log(1 + `gameboard [${rowNumber}] [${n}]`);
     });
 
     rowBox.appendChild(columnBox);
   }
 }
-export function renderBoard(gameboardChosen, player, row, column) {
+function renderBoard(gameboard, player) {
   const body = document.querySelector("body");
 
   console.log("Adding board");
@@ -168,14 +239,38 @@ export function renderBoard(gameboardChosen, player, row, column) {
   gameboardDiv.setAttribute("id", "gameboardDiv");
   gameboardDiv.style.border = "red 2px solid";
   gameboardDiv.style.width = "fit-content";
-  // gameboardDiv.style.height = "100px";
   body.appendChild(gameboardDiv);
   for (let j = 0; j <= 2; j++) {
-    createGameboardRow(gameboardDiv, gameboardChosen, j, player);
+    createGameboardRow(gameboardDiv, gameboard, j, player);
   }
 }
+const formSubmit = document.getElementById("formSubmit");
 
-renderBoard(gameboard, player2);
+formSubmit.addEventListener("click", (event) => {
+  event.preventDefault();
+  console.log("clicked");
+  // const player1Name = ;
+  player1.name =
+    document.getElementById("player1Name")?.value ||
+    document.getElementById("player1Name").placeholder;
+  console.log(player1.name);
+  player1.marker =
+    document.getElementById("player1Marker")?.value ||
+    document.getElementById("player1Marker").placeholder;
+
+  player2.name =
+    document.getElementById("player2Name")?.value ||
+    document.getElementById("player2Name").placeholder;
+  console.log(player2.name);
+
+  player2.marker =
+    document.getElementById("player2Marker")?.value ||
+    document.getElementById("player2Marker").placeholder;
+
+  renderBoard(gameboard, player);
+});
+
+// renderBoard(gameboard, player);
 
 // Functions for filling winning lines
 // function fill1stRow() {
