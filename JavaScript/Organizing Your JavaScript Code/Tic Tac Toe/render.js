@@ -32,25 +32,8 @@ export function domDialogAndDrawLines(
     winnerDialog.remove();
   }, 9000);
 }
-function playerTakesTurn(gameboard, player, rowIndex, columnIndex) {
-  if (!gameboard[rowIndex][columnIndex]) {
-    gameboard[rowIndex][columnIndex] = player.marker;
-    turnsTaken++;
-    console.log(
-      player.name +
-        " took their turn placing an '" +
-        player.marker +
-        "' in Row " +
-        rowIndex +
-        ", Column " +
-        columnIndex
-    );
-  } else {
-    console.log("This position is already taken, please try again");
-  }
-}
 
-export function renderBoard(gameboard, player) {
+export function renderBoard(gameboard, eventCallback) {
   const body = document.querySelector("body");
 
   console.log("Adding board");
@@ -59,6 +42,7 @@ export function renderBoard(gameboard, player) {
   gameboardDiv.style.border = "red 2px solid";
   gameboardDiv.style.width = "fit-content";
   body.appendChild(gameboardDiv);
+
   for (let rowIndex = 0; rowIndex <= 2; rowIndex++) {
     const rowBox = document.createElement("div");
     rowBox.setAttribute("id", "gameboardRow" + rowIndex);
@@ -79,12 +63,7 @@ export function renderBoard(gameboard, player) {
       columnBox.style.justifyContent = "center";
       columnBox.style.alignItems = "center";
       columnBox.addEventListener("click", () => {
-        playerTakesTurn(gameboard, player, rowIndex, columnIndex);
-        console.log(1 + `gameboard [${rowIndex}] [${columnIndex}]`);
-        player = player === player1 ? player2 : player1;
-        wipeRenderedBoard();
-        renderBoard(gameboard, player);
-        checkBoardForWinners(player);
+        eventCallback(rowIndex, columnIndex);
       });
 
       rowBox.appendChild(columnBox);

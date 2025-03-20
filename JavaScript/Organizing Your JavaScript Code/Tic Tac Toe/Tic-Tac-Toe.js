@@ -23,6 +23,37 @@ let player = player1;
 
 console.log("gameboard initial state", gameboard);
 
+function playerTakesTurn(gameboard, player, rowIndex, columnIndex) {
+  if (!gameboard[rowIndex][columnIndex]) {
+    gameboard[rowIndex][columnIndex] = player.marker;
+    turnsTaken++;
+    console.log(
+      player.name +
+        " took their turn placing an '" +
+        player.marker +
+        "' in Row " +
+        rowIndex +
+        ", Column " +
+        columnIndex
+    );
+  } else {
+    console.log("This position is already taken, please try again");
+  }
+}
+
+function playerTakesTurnHandler(rowIndex, columnIndex) {
+  playerTakesTurn(gameboard, player, rowIndex, columnIndex);
+  const result = checkBoardForWinners(player);
+  console.log(1 + `gameboard [${rowIndex}] [${columnIndex}]`);
+  player = player === player1 ? player2 : player1;
+  if (result) {
+    // draw the line
+  } else {
+    wipeRenderedBoard();
+    renderBoard(gameboard, playerTakesTurnHandler);
+  }
+}
+
 function checkBoardForWinners(player) {
   console.log("Player", player);
   const firstRow = {
@@ -124,7 +155,7 @@ function checkBoardForWinners(player) {
       console.log("Board reset");
       console.log(gameboard);
       wipeRenderedBoard();
-      renderBoard(gameboard, player);
+      renderBoard(gameboard, playerTakesTurnHandler);
       winnerDialog.remove();
       clapping.pause();
     }, 6000);
@@ -162,7 +193,7 @@ formSubmit.addEventListener("click", (event) => {
     document.getElementById("player2Marker")?.value ||
     document.getElementById("player2Marker").placeholder;
 
-  renderBoard(gameboard, player);
+  renderBoard(gameboard, playerTakesTurnHandler);
 });
 
 // renderBoard(gameboard, player);
