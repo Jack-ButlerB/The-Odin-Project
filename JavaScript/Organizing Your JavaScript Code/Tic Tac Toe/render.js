@@ -4,7 +4,7 @@ export function wipeRenderedBoard() {
 }
 export function domDialogAndDrawLines(
   lookupPlayer,
-  playerTakingTurn,
+  // playerTakingTurn,
   gameboard,
   paramWinningline
 ) {
@@ -24,13 +24,13 @@ export function domDialogAndDrawLines(
     ["", "", ""],
     ["", "", ""],
   ];
-  setTimeout(() => {
-    console.log("Board reset");
-    console.log(gameboard);
-    wipeRenderedBoard();
-    renderBoard(gameboard, playerTakingTurn);
-    winnerDialog.remove();
-  }, 9000);
+  // setTimeout(() => {
+  //   console.log("Board reset");
+  //   console.log(gameboard);
+  //   wipeRenderedBoard();
+  //   renderBoard(gameboard, playerTakingTurn);
+  //   winnerDialog.remove();
+  // }, 9000);
 }
 
 export function renderBoard(gameboard, eventCallback) {

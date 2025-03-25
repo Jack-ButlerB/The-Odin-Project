@@ -46,7 +46,12 @@ function playerTakesTurnHandler(rowIndex, columnIndex) {
   const result = checkBoardForWinners(player);
   console.log(1 + `gameboard [${rowIndex}] [${columnIndex}]`);
   player = player === player1 ? player2 : player1;
-  if (result) {
+  switch (result) {
+    case "First Row"{
+      const drawLine = "linear-gradient(to bottom, white, white 16.6%, red 16.6%, red 17.6%, white 17.6%, white)",
+
+      domDialogAndDrawLines()
+    }
     // draw the line
   } else {
     wipeRenderedBoard();
@@ -55,7 +60,6 @@ function playerTakesTurnHandler(rowIndex, columnIndex) {
 }
 
 function checkBoardForWinners(player) {
-  console.log("Player", player);
   const firstRow = {
     title: "First Row",
     line: [gameboard[0][0], gameboard[0][1], gameboard[0][2]],
@@ -116,14 +120,6 @@ function checkBoardForWinners(player) {
     secondDiagonal,
   ];
 
-  console.log("player before loop", player);
-  for (const winningline of winninglines) {
-    if (winningline.line.every((item) => item === player1.marker)) {
-      domDialogAndDrawLines(player1, player, gameboard, winningline);
-    } else if (winningline.line.every((item) => item === player2.marker)) {
-      domDialogAndDrawLines(player2, player, gameboard, winningline);
-    }
-  }
   const winninglinesLines = [
     firstRow.line,
     secondRow.line,
@@ -134,6 +130,17 @@ function checkBoardForWinners(player) {
     firstDiagonal.line,
     secondDiagonal.line,
   ];
+  console.log("winningLines", winninglines);
+
+  console.log("winningLinesLines", winninglinesLines);
+
+  for (const winningline of winninglines) {
+    if (winningline.line.every((item) => item === player1.marker)) {
+      domDialogAndDrawLines(player1, player, gameboard, winningline);
+    } else if (winningline.line.every((item) => item === player2.marker)) {
+      domDialogAndDrawLines(player2, player, gameboard, winningline);
+    }
+  }
 
   if (winninglinesLines.every((line) => line.every((cell) => cell !== ""))) {
     console.log("No one won");
