@@ -47,16 +47,21 @@ function playerTakesTurnHandler(rowIndex, columnIndex) {
 
     wipeRenderedBoard();
     renderBoard(gameboard, playerTakesTurnHandler);
+    console.log(isBoardFull(gameboard) ? "Board is full" : "Board is not full");
+    const winningLine = getWinningLine(player);
 
-    const result = checkBoardForWinners(player);
-
-    if (result !== undefined) {
+    if (winningLine) {
       gameboard = [
         ["", "", ""],
         ["", "", ""],
         ["", "", ""],
       ];
-      domDialogAndDrawLines(player, gameboard, result, playerTakesTurnHandler);
+      domDialogAndDrawLines(
+        player,
+        gameboard,
+        winningLine,
+        playerTakesTurnHandler
+      );
     }
     // switch (result) {
     //   case "First Row":
@@ -173,7 +178,7 @@ const secondDiagonal = {
     "linear-gradient(to top left, white, white 49.5%, red 49.5%, red 50.5%, white 50.5%, white)",
 };
 
-function checkBoardForWinners(player) {
+function getWinningLine(player) {
   firstRow.line = [gameboard[0][0], gameboard[0][1], gameboard[0][2]];
   secondRow.line = [gameboard[1][0], gameboard[1][1], gameboard[1][2]];
   thirdRow.line = [gameboard[2][0], gameboard[2][1], gameboard[2][2]];
@@ -193,27 +198,16 @@ function checkBoardForWinners(player) {
     firstDiagonal,
     secondDiagonal,
   ];
-
-  const winninglinesLines = [
-    firstRow.line,
-    secondRow.line,
-    thirdRow.line,
-    firstColumn.line,
-    secondColumn.line,
-    thirdColumn.line,
-    firstDiagonal.line,
-    secondDiagonal.line,
-  ];
   // checking for a winner on each line and returning that the varible linked to that line
   for (const winningline of winninglines) {
     if (winningline.line.every((item) => item === player.marker)) {
       return winningline;
     }
   }
-  // checking every cell if a marker has been entered, if it has then no one has won
-  if (winninglinesLines.every((line) => line.every((cell) => cell !== ""))) {
-    return "all spaces filled, no winner";
-  }
+}
+
+function isBoardFull(gameboard) {
+  return gameboard.every((line) => line.every((cell) => cell));
 }
 
 const formSubmit = document.getElementById("formSubmit");
