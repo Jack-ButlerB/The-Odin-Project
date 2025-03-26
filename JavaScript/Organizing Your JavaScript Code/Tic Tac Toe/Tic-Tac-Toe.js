@@ -7,13 +7,6 @@ import {
 let player1 = { name: "Player 1", marker: "X" };
 let player2 = { name: "Player 2", marker: "O" };
 
-// make empty entries either null or empty string. Better to be falsey
-// let gameboard = [
-//   [null, null, null],
-//   [null, null, null],
-//   [null, null, null],
-// ];
-
 let gameboard = [
   ["", "", ""],
   ["", "", ""],
@@ -36,6 +29,7 @@ function playerTakesTurn(gameboard, player, rowIndex, columnIndex) {
         ", Column " +
         columnIndex
     );
+    return;
   } else {
     console.log("This position is already taken, please try again");
     return "position taken";
@@ -55,10 +49,8 @@ function playerTakesTurnHandler(rowIndex, columnIndex) {
     renderBoard(gameboard, playerTakesTurnHandler);
 
     const result = checkBoardForWinners(player);
-    console.log("result", result);
 
     if (result !== undefined) {
-      console.log("calling domdialogAndDrawLines");
       gameboard = [
         ["", "", ""],
         ["", "", ""],
@@ -228,11 +220,10 @@ const formSubmit = document.getElementById("formSubmit");
 
 formSubmit.addEventListener("click", (event) => {
   event.preventDefault();
-  console.log("clicked");
+  // console.log("clicked");
   player1.name =
     document.getElementById("player1Name")?.value ||
     document.getElementById("player1Name").placeholder;
-  console.log(player1.name);
   player1.marker =
     document.getElementById("player1Marker")?.value ||
     document.getElementById("player1Marker").placeholder;
@@ -240,7 +231,6 @@ formSubmit.addEventListener("click", (event) => {
   player2.name =
     document.getElementById("player2Name")?.value ||
     document.getElementById("player2Name").placeholder;
-  console.log(player2.name);
 
   player2.marker =
     document.getElementById("player2Marker")?.value ||
@@ -250,61 +240,3 @@ formSubmit.addEventListener("click", (event) => {
 
   renderBoard(gameboard, playerTakesTurnHandler);
 });
-
-// renderBoard(gameboard, player);
-
-// Functions for filling winning lines
-// function fill1stRow() {
-//   playerTakesTurn(player1, 0, 0);
-//   playerTakesTurn(player1, 0, 1);
-//   playerTakesTurn(player1, 0, 2);
-// }
-// // fill1stRow();
-// function fill2ndRow() {
-//   playerTakesTurn(player1, 1, 0);
-//   playerTakesTurn(player1, 1, 1);
-//   playerTakesTurn(player1, 1, 2);
-// }
-// // fill2ndRow();
-// function fill3rdRow() {
-//   playerTakesTurn(player1, 2, 0);
-//   playerTakesTurn(player1, 2, 1);
-//   playerTakesTurn(player1, 2, 2);
-// }
-// function fill1stCol() {
-//   playerTakesTurn(player1, 0, 0);
-//   playerTakesTurn(player1, 1, 0);
-//   playerTakesTurn(player1, 2, 0);
-// }
-// function fill2ndCol() {
-//   playerTakesTurn(player1, 0, 1);
-//   playerTakesTurn(player1, 1, 1);
-//   playerTakesTurn(player1, 2, 1);
-// }
-// function fill3rdCol() {
-//   playerTakesTurn(player1, 0, 2);
-//   playerTakesTurn(player1, 1, 2);
-//   playerTakesTurn(player1, 2, 2);
-// }
-// function fill1stDiag() {
-//   playerTakesTurn(player1, 0, 0);
-//   playerTakesTurn(player1, 1, 1);
-//   playerTakesTurn(player1, 2, 2);
-// }
-// function fill2ndDiag() {
-//   playerTakesTurn(player1, 0, 2);
-//   playerTakesTurn(player1, 1, 1);
-//   playerTakesTurn(player1, 2, 0);
-// }
-
-// function playGame() {
-//   playerTakesTurn(player1, 1, 1);
-//   playerTakesTurn(player2, 2, 0);
-//   playerTakesTurn(player1, 2, 2);
-//   playerTakesTurn(player2, 0, 0);
-//   playerTakesTurn(player1, 0, 1);
-//   playerTakesTurn(player2, 1, 0);
-//   playerTakesTurn(player2, 1, 0);
-// }
-
-// import { gameboard } from "./Tic-Tac-Toe";

@@ -60,7 +60,7 @@ export function domDialogAndDrawLines(
 export function renderBoard(gameboard, eventCallback) {
   const body = document.querySelector("body");
 
-  console.log("Adding board");
+  console.log("Rendering board");
   const gameboardDiv = document.createElement("div");
   gameboardDiv.setAttribute("id", "gameboardDiv");
   gameboardDiv.style.border = "red 2px solid";
