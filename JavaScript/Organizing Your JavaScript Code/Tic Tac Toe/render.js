@@ -3,27 +3,51 @@ export function wipeRenderedBoard() {
   gameboardDiv.remove();
 }
 export function domDialogAndDrawLines(
-  lookupPlayer,
-  // playerTakingTurn,
+  playerTakingTurn,
   gameboard,
-  paramWinningline
+  paramWinningline,
+  eventCallback
 ) {
   const gameboardDiv = document.getElementById("gameboardDiv");
-  console.log("winning line gameboard", gameboard);
+  // console.log("winning line gameboard", gameboard);
+  // console.log("code for drawing line", paramWinningline.drawLine);
   gameboardDiv.style.background = paramWinningline.drawLine;
   const winnerDialog = document.createElement("dialog");
   const body = document.querySelector("body");
   body.appendChild(winnerDialog);
-  winnerDialog.textContent = `${lookupPlayer.name} Wins!`;
+  let audio = null;
+  if (paramWinningline === "all spaces filled, no winner") {
+    console.log("No one won");
+    winnerDialog.textContent = "No one won!?";
+    audio = new Audio("small-crowd-reactions-6977.mp3");
+  } else {
+    winnerDialog.textContent = `${playerTakingTurn.name} Wins!`;
+    audio = new Audio("small-crowd-clapping-2-106993.mp3");
+    audio.play();
+    console.log(
+      playerTakingTurn.name + " wins" + " on " + paramWinningline.title
+    );
+  }
+  const resetButton = document.createElement("button");
+  resetButton.textContent = "Play Again?";
+  resetButton.addEventListener("click", () => {
+    winnerDialog.remove();
+    wipeRenderedBoard();
+    renderBoard(gameboard, eventCallback);
+  });
+  winnerDialog.appendChild(resetButton);
+  audio.play();
+  setTimeout(() => {
+    audio.pause();
+  }, 5000);
+
   winnerDialog.showModal();
-  const clapping = new Audio("small-crowd-clapping-2-106993.mp3");
-  clapping.play();
-  console.log(lookupPlayer.name + " wins" + " on " + paramWinningline.title);
-  gameboard = [
-    ["", "", ""],
-    ["", "", ""],
-    ["", "", ""],
-  ];
+
+  // gameboard = [
+  //   ["", "", ""],
+  //   ["", "", ""],
+  //   ["", "", ""],
+  // ];
   // setTimeout(() => {
   //   console.log("Board reset");
   //   console.log(gameboard);
@@ -69,4 +93,15 @@ export function renderBoard(gameboard, eventCallback) {
       rowBox.appendChild(columnBox);
     }
   }
+}
+
+export function positionTakenFlash() {
+  const body = document.querySelector("body");
+  const positionTaken = document.createElement("h1");
+  positionTaken.textContent =
+    "This position is already taken, please try again";
+  body.appendChild(positionTaken);
+  setTimeout(() => {
+    positionTaken.remove();
+  }, 1500);
 }
