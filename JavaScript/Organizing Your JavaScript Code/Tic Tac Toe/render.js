@@ -80,11 +80,10 @@ export function playAudio(hasWinner) {
   }, 5000);
 }
 
-export function positionTakenFlash() {
+export function positionTakenFlash(caughtErrorMessage) {
   const body = document.querySelector("body");
   const positionTaken = document.createElement("h1");
-  positionTaken.textContent =
-    "This position is already taken, please try again";
+  positionTaken.textContent = caughtErrorMessage;
   body.appendChild(positionTaken);
   setTimeout(() => {
     positionTaken.remove();

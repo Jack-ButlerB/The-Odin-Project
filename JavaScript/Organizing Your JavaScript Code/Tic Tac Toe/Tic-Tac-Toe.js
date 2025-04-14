@@ -38,65 +38,57 @@ function playerTakesTurn(gameboard, player, rowIndex, columnIndex) {
 
 function getWinningLine(player) {
   // TODO: This can go straight into the array below
-  const firstRow = {
-    title: "First Row",
-    line: [gameboard[0][0], gameboard[0][1], gameboard[0][2]],
-    drawLine:
-      "linear-gradient(to bottom, white, white 16.6%, red 16.6%, red 17.6%, white 17.6%, white)",
-  };
-  const secondRow = {
-    title: "Second Row",
-    line: [gameboard[1][0], gameboard[1][1], gameboard[1][2]],
-    drawLine:
-      "linear-gradient(to bottom, white, white 49.5%, red 49.5%, red 50.5%, white 50.5%, white)",
-  };
-  const thirdRow = {
-    title: "Third Row",
-    line: [gameboard[2][0], gameboard[2][1], gameboard[2][2]],
-    drawLine:
-      "linear-gradient(to top, white, white 16.6%, red 16.6%, red 17.6%, white 17.6%, white)",
-  };
-  const firstColumn = {
-    title: "First Column",
-    line: [gameboard[0][0], gameboard[1][0], gameboard[2][0]],
-    drawLine:
-      "linear-gradient(to right, white, white 16.6%, red 16.6%, red 17.6%, white 17.6%, white)",
-  };
-  const secondColumn = {
-    title: "Second Column",
-    line: [gameboard[0][1], gameboard[1][1], gameboard[2][1]],
-    drawLine:
-      "linear-gradient(to right, white, white 49.5%, red 49.5%, red 50.5%, white 50.5%, white)",
-  };
-  const thirdColumn = {
-    title: "Third Column",
-    line: [gameboard[0][2], gameboard[1][2], gameboard[2][2]],
-    drawLine:
-      "linear-gradient(to left, white, white 16.6%, red 16.6%, red 17.6%, white 17.6%, white)",
-  };
-  const firstDiagonal = {
-    title: "Diagonal (top left to bottom right)",
-    line: [gameboard[0][0], gameboard[1][1], gameboard[2][2]],
-    drawLine:
-      "linear-gradient(to top right, white, white 49.5%, red 49.5%, red 50.5%, white 50.5%, white)",
-  };
-  const secondDiagonal = {
-    title: "Diagonal (bottom left to top right)",
-    line: [gameboard[0][2], gameboard[1][1], gameboard[2][0]],
-    drawLine:
-      "linear-gradient(to top left, white, white 49.5%, red 49.5%, red 50.5%, white 50.5%, white)",
-  };
-
   const winninglines = [
-    firstRow,
-    secondRow,
-    thirdRow,
-    firstColumn,
-    secondColumn,
-    thirdColumn,
-    firstDiagonal,
-    secondDiagonal,
+    {
+      title: "First Row",
+      line: [gameboard[0][0], gameboard[0][1], gameboard[0][2]],
+      drawLine:
+        "linear-gradient(to bottom, white, white 16.6%, red 16.6%, red 17.6%, white 17.6%, white)",
+    },
+    {
+      title: "Second Row",
+      line: [gameboard[1][0], gameboard[1][1], gameboard[1][2]],
+      drawLine:
+        "linear-gradient(to bottom, white, white 49.5%, red 49.5%, red 50.5%, white 50.5%, white)",
+    },
+    {
+      title: "Third Row",
+      line: [gameboard[2][0], gameboard[2][1], gameboard[2][2]],
+      drawLine:
+        "linear-gradient(to top, white, white 16.6%, red 16.6%, red 17.6%, white 17.6%, white)",
+    },
+    {
+      title: "First Column",
+      line: [gameboard[0][0], gameboard[1][0], gameboard[2][0]],
+      drawLine:
+        "linear-gradient(to right, white, white 16.6%, red 16.6%, red 17.6%, white 17.6%, white)",
+    },
+    {
+      title: "Second Column",
+      line: [gameboard[0][1], gameboard[1][1], gameboard[2][1]],
+      drawLine:
+        "linear-gradient(to right, white, white 49.5%, red 49.5%, red 50.5%, white 50.5%, white)",
+    },
+    {
+      title: "Third Column",
+      line: [gameboard[0][2], gameboard[1][2], gameboard[2][2]],
+      drawLine:
+        "linear-gradient(to left, white, white 16.6%, red 16.6%, red 17.6%, white 17.6%, white)",
+    },
+    {
+      title: "Diagonal (top left to bottom right)",
+      line: [gameboard[0][0], gameboard[1][1], gameboard[2][2]],
+      drawLine:
+        "linear-gradient(to top right, white, white 49.5%, red 49.5%, red 50.5%, white 50.5%, white)",
+    },
+    {
+      title: "Diagonal (bottom left to top right)",
+      line: [gameboard[0][2], gameboard[1][1], gameboard[2][0]],
+      drawLine:
+        "linear-gradient(to top left, white, white 49.5%, red 49.5%, red 50.5%, white 50.5%, white)",
+    },
   ];
+
   // checking for a winner on each line and returning that the varible linked to that line
   for (const winningline of winninglines) {
     if (winningline.line.every((item) => item === player.marker)) {
@@ -151,8 +143,8 @@ function playerTakesTurnHandler(rowIndex, columnIndex) {
     player = player === player1 ? player2 : player1;
   } catch (error) {
     // TODO: can you pass the error message into the positionTakenFlash function?
-    // console.log(error.message);
-    positionTakenFlash();
+    console.error(error.message);
+    positionTakenFlash(error.message);
   }
 }
 
